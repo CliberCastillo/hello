@@ -2,28 +2,28 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hello-ingress
-  namespace: hello
+  namespace: hello 
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/server-snippet: |
+    cert-manager.io/cluster-issuer: "letsencrypt-prod" 
+    nginx.ingress.kubernetes.io/server-snippet: | 
       add_header X-Frame-Options "SAMEORIGIN" always;
       add_header X-Content-Type-Options "nosniff" always;
       add_header X-XSS-Protection "1; mode=block" always;
       add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 spec:
-  ingressClassName: azure-application-gateway
+  ingressClassName: nginx 
   tls:
   - hosts:
-    - hello-app.yourdomain.com
-    secretName: hello-app-tls
+    - hello-app.mibanco.com
+    secretName: hello-app-tls 
   rules:
-  - host: hello-app.yourdomain.com
+  - host: hello-app.mibanco.com 
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: hello-service
+            name: hello-service 
             port:
               number: 80

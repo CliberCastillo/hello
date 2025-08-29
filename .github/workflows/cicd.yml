@@ -73,12 +73,6 @@ jobs:
         image-ref: ${{ steps.version.outputs.full-image-name }}
         format: 'table'
         exit-code: '0'
-        
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v2
-      if: always()
-      with:
-        sarif_file: 'trivy-results.sarif'
 
   # k8s-security:
   #   name: K8s Security Check

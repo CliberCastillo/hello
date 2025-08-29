@@ -4,7 +4,6 @@ metadata:
   name: hello-ingress
   namespace: hello
   annotations:
-    kubernetes.io/ingress.class: "azure/application-gateway"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/server-snippet: |
       add_header X-Frame-Options "SAMEORIGIN" always;
@@ -12,6 +11,7 @@ metadata:
       add_header X-XSS-Protection "1; mode=block" always;
       add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 spec:
+  ingressClassName: azure-application-gateway
   tls:
   - hosts:
     - hello-app.yourdomain.com

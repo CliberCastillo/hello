@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-deployment
-  namespace: hello-app
+  namespace: hello
   labels:
     app: hello-app
     version: v1
@@ -23,11 +23,11 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
-        env:
-        - name: PORT
-          value: "8080"
-        - name: ENVIRONMENT
-          value: "production"
+        # env:
+        # - name: PORT
+        #   value: "8080"
+        # - name: ENVIRONMENT
+        #   value: "production"
         resources:
           requests:
             cpu: 100m

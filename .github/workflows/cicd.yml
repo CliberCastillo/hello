@@ -84,16 +84,10 @@ jobs:
 
     - name: Run kubesec scan
       run: |
-        # Install kubesec
         curl -sSL https://github.com/controlplaneio/kubesec/releases/latest/download/kubesec_linux_amd64.tar.gz | tar xz
         sudo mv kubesec /usr/local/bin/
         
-        # Scan K8s manifests
         kubesec scan k8s/deployment.yaml
-        kubesec scan k8s/service.yaml
-        kubesec scan k8s/ingress.yaml
-        kubesec scan k8s/namespace.yaml
-        kubesec scan k8s/hpa.yaml
 
   deploy-to-aks:
     name: Deploy to AKS

@@ -120,8 +120,6 @@ jobs:
       
         sed -i "s@acrpracticeprod01\.azurecr\.io/hello-app:latest@${FULL_IMAGE_NAME}@g" k8s/deployment.yaml
         
-
-
     - name: Create namespace
       run: kubectl apply -f k8s/namespace.yaml
 

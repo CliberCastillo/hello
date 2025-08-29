@@ -112,8 +112,10 @@ jobs:
 
     - name: Update image tag in manifests
       run: |
-        sed -i "s|acrpracticeprod01.azurecr.io/hello-app:latest|${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ needs.build-test.outputs.image-tag }}|g" k8s/deployment.yaml
-    
+        FULL_IMAGE_NAME="${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ needs.build-test.outputs.image-tag }}"
+        echo "Reemplazando imagen con: $FULL_IMAGE_NAME"
+        sed -i "s#acrpracticeprod01\.azurecr\.io/hello-app:latest#${FULL_IMAGE_NAME}#g" k8s/deployment.yaml
+
     - name: Create namespace
       run: kubectl apply -f k8s/namespace.yaml
 

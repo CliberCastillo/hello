@@ -4,7 +4,7 @@ import os
 
 app = FastAPI(title="MiBanco API", version="1.0.0")
 
-TEXT = os.getenv("TEXT", "hola mibanco :D")
+TEXT = os.getenv("TEXT", "hola mibanco")
 
 @app.get("/health")
 async def health():

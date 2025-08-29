@@ -19,7 +19,8 @@ jobs:
     name: Build & Test
     runs-on: ubuntu-latest
     outputs:
-      image-tag: ${{ steps.meta.outputs.tags }}
+      image-tag: ${{ steps.version.outputs.version }}
+      full-image-name: ${{ steps.version.outputs.full-image-name }}
       image-digest: ${{ steps.build.outputs.digest }}
     steps:
     - name: Checkout code
@@ -112,9 +113,14 @@ jobs:
 
     - name: Update image tag in manifests
       run: |
-        FULL_IMAGE_NAME="${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ steps.version.outputs.version }}"
-        echo "Reemplazando imagen con: $FULL_IMAGE_NAME"
-        sed -i "s#acrpracticeprod01\.azurecr\.io/hello-app:latest#${FULL_IMAGE_NAME}#g" k8s/deployment.yaml
+        FULL_IMAGE_NAME="${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ needs.build-test.outputs.image-tag }}"
+        
+        echo "Image tag from build-test: '${{ needs.build-test.outputs.image-tag }}'"
+        echo "Full image name: '$FULL_IMAGE_NAME'"
+      
+        sed -i "s@acrpracticeprod01\.azurecr\.io/hello-app:latest@${FULL_IMAGE_NAME}@g" k8s/deployment.yaml
+        
+
 
     - name: Create namespace
       run: kubectl apply -f k8s/namespace.yaml
